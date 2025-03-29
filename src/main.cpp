@@ -2,6 +2,7 @@
 
 #define RELAY_PIN 5
 #define PIR_PIN 4
+#define BUZZER_PIN 3
 
 void setup() {
 
@@ -10,6 +11,8 @@ void setup() {
     pinMode(RELAY_PIN, OUTPUT);
     digitalWrite(RELAY_PIN, HIGH);
     pinMode(PIR_PIN, INPUT);
+    pinMode(BUZZER_PIN, OUTPUT);
+    digitalWrite(BUZZER_PIN, LOW);
 
 
 }
@@ -29,9 +32,11 @@ void loop() {
 
     if(pirStatus){
         digitalWrite(RELAY_PIN, HIGH);
+        //digitalWrite(BUZZER_PIN, HIGH);
         Serial.println("Station on");
     } else {
         digitalWrite(RELAY_PIN, LOW);
+        //digitalWrite(BUZZER_PIN, LOW);
         Serial.println("Station off");
     }
 }
