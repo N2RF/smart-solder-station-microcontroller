@@ -21,3 +21,9 @@ void setupWifi(const char* ssid, const char* password) {
     Serial.println(WiFi.localIP());
 
 }
+
+boolean transmitMessage(boolean stationState){
+    Serial.println("Transmitting message");
+    return false;
+}
+

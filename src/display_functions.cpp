@@ -29,16 +29,16 @@ void setupScreen(){
   // Show initial display buffer contents on the screen --
   // the library initializes this with an Adafruit splash screen.
   display.display();
-  delay(2000); // Pause for 2 seconds
+  //delay(2000); // Pause for 2 seconds
 
-  // // Clear the buffer
-  // display.clearDisplay();
-  //
-  // // Draw a single pixel in white
-  // display.drawPixel(10, 10, SSD1306_WHITE);
-  //
-  //
-  // display.display();
+   // Clear the buffer
+   display.clearDisplay();
+
+   // Draw a single pixel in white
+   display.drawPixel(10, 10, SSD1306_WHITE);
+
+
+   display.display();
   //TODO display the station number on the screen.
   //Use the examples from the library for reference
 }

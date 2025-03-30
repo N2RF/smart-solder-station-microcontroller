@@ -7,4 +7,6 @@
 
 void setupWifi(const char* ssid, const char* password);
 
+boolean transmitMessage(boolean stationState);
+
 #endif //WIFI_FUNCTIONS_H
