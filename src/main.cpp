@@ -15,7 +15,7 @@ TaskHandle_t DetectionHandler;
 // Task functions
 void detectionTask(void * pvParameters) {
     while (true) {
-        detectionTick();
+        //detectionTick();
         vTaskDelay(50 / portTICK_PERIOD_MS); // Delay for 50 ms
     }
 }
@@ -43,8 +43,8 @@ void setup() {
         WiFiManagerParameter station_name("station_name", "Station Name", "", 40);
         wifiManager.addParameter(&station_name);
         wifiManager.startConfigPortal("Smart-Soldering-Station", "lafayette");
-        Serial.println("Entered SSID: " + String(WiFi.SSID()));
-        Serial.println("Entered Password: " + String(WiFi.psk()));
+        // Serial.println("Entered SSID: " + String(WiFi.SSID()));
+        // Serial.println("Entered Password: " + String(WiFi.psk()));
         stationName = station_name.getValue();
         Serial.print("Station Name: ");
         Serial.println(stationName);
@@ -56,7 +56,11 @@ void setup() {
     } else {
         Serial.print("Station Name: ");
         Serial.println(getStationName());
-        setupWifi(WIFI_SSID, WIFI_PASSWORD);
+        Serial.print("SSID: ");
+        Serial.println(getWifiSsid());
+        Serial.print("Password: ");
+        Serial.println(getWifiPassword());
+        setupWifi(getWifiSsid(), getWifiPassword());
     }
 
     //setupWifi(WIFI_SSID, WIFI_PASSWORD);

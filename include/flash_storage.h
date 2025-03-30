@@ -38,13 +38,13 @@ boolean setWifiCredentials(String newSsid, String newPassword);
  * Gets the wifi SSID stored in flash
  * @return The SSID stored in flash
  */
-String getWifiSsid();
+const char* getWifiSsid();
 
 /**
  * Gets the wifi password stored in flash
  * @return The wifi password stored in flash
  */
-String getWifiPassword();
+const char* getWifiPassword();
 
 /**
  * Clears all the flash for the wifi credentials
