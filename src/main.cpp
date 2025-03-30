@@ -1,16 +1,21 @@
 #include <Arduino.h>
+#include <WiFi.h>
 #include "person_detection.h"
+#include "wifi_functions.h"
+#include "wifi_secrets.h"
 
 void setup() {
 
     Serial.begin(11500);
+    delay(2000);
     Serial.println("Hello World");
     pinMode(RELAY_PIN, OUTPUT);
-    digitalWrite(RELAY_PIN, HIGH);
+    digitalWrite(RELAY_PIN, LOW);
     pinMode(PIR_PIN, INPUT);
     pinMode(BUZZER_PIN, OUTPUT);
     digitalWrite(BUZZER_PIN, LOW);
 
+    setupWifi(WIFI_SSID, WIFI_PASSWORD);
 
 }
 

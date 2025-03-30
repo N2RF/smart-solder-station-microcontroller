@@ -24,7 +24,7 @@ static bool previousMotion = false;
 static int debounceCounter = 0;
 static constexpr int debounceThreshold = 300; //Change this to change debounce time
 static constexpr int debounceMotion = 180; //Change this to change debounce time
-static constexpr int debounceOff = 250; //Change this to change debounce time
+static constexpr int debounceOff = 230; //Change this to change debounce time
 
 
 enum MOTION_STATE {
@@ -72,6 +72,13 @@ void detectionTick(){
       } else if (debounceCounter == 0) { //lower edge
         motionState = OFF;
         debounceCounter = 0;
+        digitalWrite(BUZZER_PIN, HIGH);
+        delay(300);
+        digitalWrite(BUZZER_PIN, LOW);
+        delay(500);
+        digitalWrite(BUZZER_PIN, HIGH);
+        delay(300);
+        digitalWrite(BUZZER_PIN, LOW);
       } else if (isPersonDetected() && debounceCounter < debounceThreshold) {
         debounceCounter++;
         motionState = DEBOUNCE;
