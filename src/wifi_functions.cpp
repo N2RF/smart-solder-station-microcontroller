@@ -4,6 +4,10 @@
 
 #include <Arduino.h>
 #include <WiFi.h>
+#include <WiFiClientSecure.h>
+#include <HTTPClient.h>
+#include <ArduinoJson.h>
+#include "globals.h"
 #include "wifi_functions.h"
 
 void setupWifi(const char* ssid, const char* password) {
@@ -20,6 +24,46 @@ void setupWifi(const char* ssid, const char* password) {
     Serial.print("IP address: ");
     Serial.println(WiFi.localIP());
 
+}
+
+//HTTPS client
+WiFiClientSecure wifiClient;
+HTTPClient httpClient;
+
+void setupHTTP(){
+    wifiClient.setInsecure(); //TODO test if we can do it securely
+    if(!wifiClient.connect(serverAddress.c_str(), 3001)){ //TODO might need to change this
+        Serial.println("Connection failed");
+    }
+}
+
+
+boolean onboardIron(){
+    JsonDocument device_data;
+    JsonDocument received_data;
+
+    const String endpoint = "/device/manage";
+    String route = serverAddress + endpoint;
+
+    Serial.println("Starting HTTPS request");
+    if(!httpClient.begin(wifiClient, route)){
+        Serial.println("Failed to start HTTPS connection");
+        return false;
+    }
+
+    device_data["mac_address"] = macAddress;
+    device_data["bench_id"] = stationNumber;
+    device_data["wats_per_hour"] = watts;
+    String device_data_string;
+    serializeJson(device_data, device_data_string);
+    Serial.println("Sending POST request...");
+
+    httpClient.addHeader("Content-Type", "application/json");
+    int httpCode = httpClient.POST(device_data_string);
+
+    //TODO finish checking this
+
+    return false;
 }
 
 boolean transmitMessage(boolean stationState){

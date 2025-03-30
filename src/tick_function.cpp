@@ -50,6 +50,10 @@ void transmitTick() {
                 wifiManager.setConfigPortalTimeout(180);
                 WiFiManagerParameter station_name("station_name", "Station Name", "", 40);
                 wifiManager.addParameter(&station_name);
+                WiFiManagerParameter station_number("station_number", "Station Number", "", 40);
+                wifiManager.addParameter(&station_number);
+                WiFiManagerParameter station_power("station_power", "Station Power", "", 40);
+                wifiManager.addParameter(station_power);
                 wifiManager.startConfigPortal("Smart-Soldering-Station", "lafayette");
                 // Serial.println("Entered SSID: " + String(WiFi.SSID()));
                 // Serial.println("Entered Password: " + String(WiFi.psk()));
@@ -58,6 +62,7 @@ void transmitTick() {
                 Serial.println(stationName);
 
                 //Writing to flash
+                //TODO set the name, number, and power and write last 2 to flash
                 setStationName(stationName);
                 setWifiCredentials(WiFi.SSID(), WiFi.psk());
                 setSetupComplete(true);
