@@ -1,8 +1,5 @@
 #include <Arduino.h>
-
-#define RELAY_PIN 5
-#define PIR_PIN 4
-#define BUZZER_PIN 3
+#include "person_detection.h"
 
 void setup() {
 
@@ -17,26 +14,39 @@ void setup() {
 
 }
 
+// Setting up the timers for the tick function state machine
+unsigned long tick_timer1 = 0;
+unsigned long tick_timer2 = millis();
+int tick_period = 50; //In milliseconds
+
 void loop() {
-//    digitalWrite(RELAY_PIN, HIGH);
-//    Serial.println("High");
-//    delay(5000);
-//    digitalWrite(RELAY_PIN, LOW);
-//    Serial.println("Low");
-//    delay(5000);
-    bool pirStatus;
-    pirStatus = digitalRead(PIR_PIN);
+    // digitalWrite(RELAY_PIN, HIGH);
+    // Serial.println("High");
+    // delay(1000);
+    // digitalWrite(RELAY_PIN, LOW);
+    // Serial.println("Low");
+    // delay(1000);
+//    // const bool pirStatus = digitalRead(PIR_PIN);
 //    Serial.print("PIR status: ");
 //    Serial.println(pirStatus);
 //    delay(500);
 
-    if(pirStatus){
-        digitalWrite(RELAY_PIN, HIGH);
-        //digitalWrite(BUZZER_PIN, HIGH);
-        Serial.println("Station on");
-    } else {
-        digitalWrite(RELAY_PIN, LOW);
-        //digitalWrite(BUZZER_PIN, LOW);
-        Serial.println("Station off");
+    // if(pirStatus){
+    //     digitalWrite(RELAY_PIN, HIGH);
+    //     //digitalWrite(BUZZER_PIN, HIGH);
+    //     Serial.println("Station on");
+    // } else {
+    //     digitalWrite(RELAY_PIN, LOW);
+    //     //digitalWrite(BUZZER_PIN, LOW);
+    //     Serial.println("Station off");
+    // }
+
+    //Updating the tick functions timers
+    tick_timer2 = millis();
+
+    if ((tick_timer2 - tick_timer1) >= tick_period) {
+        //Serial.println("Tick function reached");
+        detectionTick();
+        tick_timer1 = tick_timer2;
     }
 }
