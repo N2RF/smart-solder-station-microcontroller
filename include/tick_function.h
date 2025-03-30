@@ -1,0 +1,10 @@
+//
+// Created by Robbie on 3/30/25.
+//
+
+#ifndef SMART_SOLDER_STATION_TICK_FUNCTION_H
+#define SMART_SOLDER_STATION_TICK_FUNCTION_H
+
+void transmitTick();
+
+#endif //SMART_SOLDER_STATION_TICK_FUNCTION_H
