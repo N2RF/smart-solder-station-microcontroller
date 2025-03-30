@@ -4,7 +4,7 @@
 
 #include <Arduino.h>
 #include "person_detection.h"
-
+#include "globals.h"
 
 
 void setupPins() {
@@ -75,9 +75,13 @@ void detectionTick(){
         digitalWrite(BUZZER_PIN, HIGH);
         delay(300);
         digitalWrite(BUZZER_PIN, LOW);
-        delay(500);
+        delay(300);
         digitalWrite(BUZZER_PIN, HIGH);
         delay(300);
+        digitalWrite(BUZZER_PIN, LOW);
+        delay(300);
+        digitalWrite(BUZZER_PIN, HIGH);
+        delay(700);
         digitalWrite(BUZZER_PIN, LOW);
       } else if (isPersonDetected() && debounceCounter < debounceThreshold) {
         debounceCounter++;
@@ -105,12 +109,14 @@ void detectionTick(){
   case MOTION_DETECTED:
     debounceCounter = debounceMotion;
     digitalWrite(RELAY_PIN, HIGH);
+    personDetected = true;
     break;
   case DEBOUNCE:
     break;
   case OFF:
     debounceCounter = debounceOff;
     digitalWrite(RELAY_PIN, LOW);
+    personDetected = false;
     break;
   }
 }

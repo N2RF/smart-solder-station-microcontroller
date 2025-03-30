@@ -1,8 +1,24 @@
 #include <Arduino.h>
 #include <WiFi.h>
+
 #include "person_detection.h"
 #include "wifi_functions.h"
+#include "globals.h"
+#include "flash_storage.h"
 #include "wifi_secrets.h"
+#include "display_functions.h"
+
+// Task Handles
+TaskHandle_t DetectionHandler;
+
+// Task functions
+void detectionTask(void * pvParameters) {
+    while (true) {
+        detectionTick();
+        vTaskDelay(50 / portTICK_PERIOD_MS); // Delay for 50 ms
+    }
+}
+
 
 void setup() {
 
@@ -15,8 +31,26 @@ void setup() {
     pinMode(BUZZER_PIN, OUTPUT);
     digitalWrite(BUZZER_PIN, LOW);
 
+    setupScreen();
+
+    if (!isSetupComplete()) {
+        flashStorageInit();
+    } else {
+        Serial.print("Station Name: ");
+        Serial.println(getStationName());
+    }
+
     setupWifi(WIFI_SSID, WIFI_PASSWORD);
 
+    //Create detection task
+    xTaskCreate(
+        detectionTask, // Function to implement the task
+        "Detection Task", // Task name
+        10000, // Stack size
+        NULL, // Task parameter
+        1, // Priority
+        &DetectionHandler // Task handle
+    );
 }
 
 // Setting up the timers for the tick function state machine
@@ -46,12 +80,12 @@ void loop() {
     //     Serial.println("Station off");
     // }
 
-    //Updating the tick functions timers
-    tick_timer2 = millis();
-
-    if ((tick_timer2 - tick_timer1) >= tick_period) {
-        //Serial.println("Tick function reached");
-        detectionTick();
-        tick_timer1 = tick_timer2;
-    }
+    // //Updating the tick functions timers
+    // tick_timer2 = millis();
+    //
+    // if ((tick_timer2 - tick_timer1) >= tick_period) {
+    //     //Serial.println("Tick function reached");
+    //     detectionTick();
+    //     tick_timer1 = tick_timer2;
+    // }
 }
