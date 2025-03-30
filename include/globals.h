@@ -16,4 +16,6 @@ extern String stationName;
 
 extern boolean personDetected;
 
+extern int stationNumber;
+
 #endif //GLOBALS_H

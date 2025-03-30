@@ -11,3 +11,5 @@ String FIRMWARE_VERSION = "1.0.0";
 String stationName = "Smart-Soldering-Station";
 
 boolean personDetected = false;
+
+int stationNumber = 0;
