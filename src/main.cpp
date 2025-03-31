@@ -16,7 +16,7 @@ TaskHandle_t TransmitHandler;
 // Task functions
 void detectionTask(void * pvParameters) {
     while (true) {
-        //detectionTick();
+        detectionTick();
         vTaskDelay(50 / portTICK_PERIOD_MS); // Delay for 50 ms
     }
 }
@@ -41,7 +41,7 @@ void setup() {
     pinMode(BUZZER_PIN, OUTPUT);
     digitalWrite(BUZZER_PIN, LOW);
 
-    setupScreen();
+    //setupScreen();
 
     //Create detection task
     xTaskCreate(
@@ -53,15 +53,15 @@ void setup() {
         &DetectionHandler // Task handle
     );
 
-    //Create transmit task
-    xTaskCreate(
-            transmitTask,
-            "Transmit Task",
-            10000,
-            NULL,
-            2,
-            &TransmitHandler
-            );
+//    //Create transmit task
+//    xTaskCreate(
+//            transmitTask,
+//            "Transmit Task",
+//            10000,
+//            NULL,
+//            2,
+//            &TransmitHandler
+//            );
 }
 
 // Setting up the timers for the tick function state machine
