@@ -44,6 +44,19 @@ void setupScreen(){
   display.println(stationNumber); //display the station number
   
    display.display();
-  //TODO display the station number on the screen.
   //Use the examples from the library for reference
+}
+
+void drawScreen(const String& text, int number){
+    display.clearDisplay();
+
+    display.setTextSize(1);             // Normal 1:1 pixel scale
+    display.setTextColor(SSD1306_WHITE);
+    display.setCursor(0,8);
+    display.println(text); // display the station name
+    display.setTextSize(2);
+    display.setCursor(10,40);
+    display.println(number); //display the station number
+
+   display.display();
 }

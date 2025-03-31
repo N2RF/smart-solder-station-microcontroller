@@ -8,6 +8,7 @@
 #include "flash_storage.h"
 #include "wifi_functions.h"
 #include "globals.h"
+#include "display_functions.h"
 #include "tick_function.h"
 
 WiFiManager wifiManager;
@@ -69,6 +70,8 @@ void transmitTick() {
                 setStationPower(watts);
                 setWifiCredentials(WiFi.SSID(), WiFi.psk());
                 setSetupComplete(true);
+
+                drawScreen(stationName, stationNumber);
             } else {
                 Serial.print("Station Name: ");
                 Serial.println(getStationName());
@@ -77,6 +80,7 @@ void transmitTick() {
                 Serial.print("Password: ");
                 Serial.println(getWifiPassword());
                 setupWifi(getWifiSsid(), getWifiPassword());
+                drawScreen(stationName, stationNumber);
             }
             break;
         case TRANSMIT:
