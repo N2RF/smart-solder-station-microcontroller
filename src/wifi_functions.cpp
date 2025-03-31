@@ -62,7 +62,28 @@ boolean onboardIron(){
     int httpCode = httpClient.POST(device_data_string);
 
     //TODO finish checking this
-
+    if(httpCode > 0){
+        String responseBody = httpClient.getString();
+        Serial.println("Response body: " + responseBody);
+        httpClient.end();
+        if(httpCode == 200){
+            Serial.println("Onboarded successfully");
+            return true;
+        } else if (httpCode == 401){
+            Serial.println("Unauthorized");
+            return false;
+        } else if(httpCode == 400){
+            Serial.println("Bad request");
+            return false;
+        } else if(httpCode == 500){
+            Serial.println("Internal server error");
+            return false;
+        } else {
+            Serial.println("Failed to update machine status: Unknown error");
+            return false;
+        }
+    }
+    Serial.println("Microcontroller error on transmitting");
     return false;
 }
 

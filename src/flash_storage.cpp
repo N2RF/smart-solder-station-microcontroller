@@ -1,5 +1,5 @@
 //
-// Created by leslier on 8/17/2024.
+// Created by Robbie Leslie on 8/17/2024.
 //
 
 #include <Arduino.h>
@@ -23,6 +23,8 @@ boolean flashStorageInit(){
         flashStorage.putString("ssid", "");
         flashStorage.putString("password", "");
         flashStorage.putString("stationName", "");
+        flashStorage.putInt("stationNumber", -1);
+        flashStorage.putInt("stationPower", -1);
         flashStorage.putBool("nvsInit", true);
     }
     flashStorage.end();
@@ -130,6 +132,52 @@ void clearStationName() {
     flashStorage.end();
     flashStorage.begin("creds", false, "nvs");
     flashStorage.putString("stationName", "");
+    flashStorage.end();
+}
+
+boolean setStationNumber(int newStationNumber) {
+    flashStorage.end();
+    flashStorage.begin("creds", false, "nvs");
+    flashStorage.putInt("stationNumber", newStationNumber);
+    flashStorage.end();
+    return true;
+}
+
+int getStationNumber() {
+    flashStorage.end();
+    flashStorage.begin("creds", true, "nvs");
+    int storedStationNumber = flashStorage.getInt("stationNumber", -1);
+    flashStorage.end();
+    return storedStationNumber;
+}
+
+void clearStationNumber(){
+    flashStorage.end();
+    flashStorage.begin("creds", false, "nvs");
+    flashStorage.putInt("stationNumber", -1);
+    flashStorage.end();
+}
+
+boolean setStationPower(int newStationPower) {
+    flashStorage.end();
+    flashStorage.begin("creds", false, "nvs");
+    flashStorage.putInt("stationPower", newStationPower);
+    flashStorage.end();
+    return true;
+}
+
+int getStationPower() {
+    flashStorage.end();
+    flashStorage.begin("creds", true, "nvs");
+    int storedStationPower = flashStorage.getInt("stationPower", -1);
+    flashStorage.end();
+    return storedStationPower;
+}
+
+void clearStationPower(){
+    flashStorage.end();
+    flashStorage.begin("creds", false, "nvs");
+    flashStorage.putInt("stationPower", -1);
     flashStorage.end();
 }
 

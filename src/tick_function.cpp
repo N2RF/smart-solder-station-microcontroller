@@ -53,17 +53,20 @@ void transmitTick() {
                 WiFiManagerParameter station_number("station_number", "Station Number", "", 40);
                 wifiManager.addParameter(&station_number);
                 WiFiManagerParameter station_power("station_power", "Station Power", "", 40);
-                wifiManager.addParameter(station_power);
+                wifiManager.addParameter(&station_power);
                 wifiManager.startConfigPortal("Smart-Soldering-Station", "lafayette");
                 // Serial.println("Entered SSID: " + String(WiFi.SSID()));
                 // Serial.println("Entered Password: " + String(WiFi.psk()));
                 stationName = station_name.getValue();
+                stationNumber = (int) station_number.getValue();
+                watts = (int) station_power.getValue();
                 Serial.print("Station Name: ");
                 Serial.println(stationName);
 
                 //Writing to flash
-                //TODO set the name, number, and power and write last 2 to flash
                 setStationName(stationName);
+                setStationNumber(stationNumber);
+                setStationPower(watts);
                 setWifiCredentials(WiFi.SSID(), WiFi.psk());
                 setSetupComplete(true);
             } else {
