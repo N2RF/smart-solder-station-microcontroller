@@ -10,7 +10,7 @@
 String FIRMWARE_VERSION = "1.0.0";
 const String macAddress = WiFi.macAddress();
 
-String stationName = "Smart-Soldering-Station";
+String stationName = "Smart-Station";
 
 boolean personDetected = false;
 
