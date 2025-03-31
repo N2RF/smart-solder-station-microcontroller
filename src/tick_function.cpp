@@ -8,6 +8,7 @@
 #include "flash_storage.h"
 #include "wifi_functions.h"
 #include "globals.h"
+#include "display_functions.h"
 #include "tick_function.h"
 
 WiFiManager wifiManager;
@@ -50,17 +51,27 @@ void transmitTick() {
                 wifiManager.setConfigPortalTimeout(180);
                 WiFiManagerParameter station_name("station_name", "Station Name", "", 40);
                 wifiManager.addParameter(&station_name);
+                WiFiManagerParameter station_number("station_number", "Station Number", "", 40);
+                wifiManager.addParameter(&station_number);
+                WiFiManagerParameter station_power("station_power", "Station Power", "", 40);
+                wifiManager.addParameter(&station_power);
                 wifiManager.startConfigPortal("Smart-Soldering-Station", "lafayette");
                 // Serial.println("Entered SSID: " + String(WiFi.SSID()));
                 // Serial.println("Entered Password: " + String(WiFi.psk()));
                 stationName = station_name.getValue();
+                stationNumber = (int) station_number.getValue();
+                watts = (int) station_power.getValue();
                 Serial.print("Station Name: ");
                 Serial.println(stationName);
 
                 //Writing to flash
                 setStationName(stationName);
+                setStationNumber(stationNumber);
+                setStationPower(watts);
                 setWifiCredentials(WiFi.SSID(), WiFi.psk());
                 setSetupComplete(true);
+
+                drawScreen(stationName, stationNumber);
             } else {
                 Serial.print("Station Name: ");
                 Serial.println(getStationName());
@@ -69,10 +80,12 @@ void transmitTick() {
                 Serial.print("Password: ");
                 Serial.println(getWifiPassword());
                 setupWifi(getWifiSsid(), getWifiPassword());
+                drawScreen(stationName, stationNumber);
             }
             break;
         case TRANSMIT:
             bool didTransmit = transmitMessage(personDetected);
+            //TODO handle transmission errors
             break;
     }
 }

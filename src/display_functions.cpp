@@ -8,6 +8,7 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <globals.h>
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
@@ -34,11 +35,28 @@ void setupScreen(){
    // Clear the buffer
    display.clearDisplay();
 
-   // Draw a single pixel in white
-   display.drawPixel(10, 10, SSD1306_WHITE);
+  display.setTextSize(1);             // Normal 1:1 pixel scale
+  display.setTextColor(SSD1306_WHITE); 
+  display.setCursor(0,8);
+  display.println(stationName); // display the station name
+  display.setTextSize(2);
+  display.setCursor(10,40);
+  display.println(stationNumber); //display the station number
+  
+   display.display();
+  //Use the examples from the library for reference
+}
 
+void drawScreen(const String& text, int number){
+    display.clearDisplay();
+
+    display.setTextSize(1);             // Normal 1:1 pixel scale
+    display.setTextColor(SSD1306_WHITE);
+    display.setCursor(0,8);
+    display.println(text); // display the station name
+    display.setTextSize(2);
+    display.setCursor(10,40);
+    display.println(number); //display the station number
 
    display.display();
-  //TODO display the station number on the screen.
-  //Use the examples from the library for reference
 }

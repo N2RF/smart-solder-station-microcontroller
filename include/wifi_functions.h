@@ -7,6 +7,10 @@
 
 void setupWifi(const char* ssid, const char* password);
 
+void setupHTTP();
+
+boolean onboardIron();
+
 boolean transmitMessage(boolean stationState);
 
 #endif //WIFI_FUNCTIONS_H

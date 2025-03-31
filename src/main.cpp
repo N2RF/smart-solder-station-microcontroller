@@ -16,7 +16,7 @@ TaskHandle_t TransmitHandler;
 // Task functions
 void detectionTask(void * pvParameters) {
     while (true) {
-        //detectionTick();
+        detectionTick();
         vTaskDelay(50 / portTICK_PERIOD_MS); // Delay for 50 ms
     }
 }
@@ -24,7 +24,7 @@ void detectionTask(void * pvParameters) {
 void transmitTask(void * pvParameters){
     while(true){
         transmitTick();
-        vTaskDelay(150 / portTICK_PERIOD_MS);
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
 
@@ -41,7 +41,7 @@ void setup() {
     pinMode(BUZZER_PIN, OUTPUT);
     digitalWrite(BUZZER_PIN, LOW);
 
-    setupScreen();
+    //setupScreen();
 
     //Create detection task
     xTaskCreate(
@@ -53,15 +53,15 @@ void setup() {
         &DetectionHandler // Task handle
     );
 
-    //Create transmit task
-    xTaskCreate(
-            transmitTask,
-            "Transmit Task",
-            10000,
-            NULL,
-            2,
-            &TransmitHandler
-            );
+//    //Create transmit task
+//    xTaskCreate(
+//            transmitTask,
+//            "Transmit Task",
+//            10000,
+//            NULL,
+//            2,
+//            &TransmitHandler
+//            );
 }
 
 // Setting up the timers for the tick function state machine
@@ -70,33 +70,5 @@ unsigned long tick_timer2 = millis();
 int tick_period = 50; //In milliseconds
 
 void loop() {
-    // digitalWrite(RELAY_PIN, HIGH);
-    // Serial.println("High");
-    // delay(1000);
-    // digitalWrite(RELAY_PIN, LOW);
-    // Serial.println("Low");
-    // delay(1000);
-//    // const bool pirStatus = digitalRead(PIR_PIN);
-//    Serial.print("PIR status: ");
-//    Serial.println(pirStatus);
-//    delay(500);
-
-    // if(pirStatus){
-    //     digitalWrite(RELAY_PIN, HIGH);
-    //     //digitalWrite(BUZZER_PIN, HIGH);
-    //     Serial.println("Station on");
-    // } else {
-    //     digitalWrite(RELAY_PIN, LOW);
-    //     //digitalWrite(BUZZER_PIN, LOW);
-    //     Serial.println("Station off");
-    // }
-
-    // //Updating the tick functions timers
-    // tick_timer2 = millis();
-    //
-    // if ((tick_timer2 - tick_timer1) >= tick_period) {
-    //     //Serial.println("Tick function reached");
-    //     detectionTick();
-    //     tick_timer1 = tick_timer2;
-    // }
+   //Nothing goes in loop because it is handled by FreeRTOS with the tasks
 }

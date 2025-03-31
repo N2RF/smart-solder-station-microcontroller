@@ -57,6 +57,18 @@ String getStationName();
 
 void clearStationName();
 
+boolean setStationNumber(int newStationNumber);
+
+int getStationNumber();
+
+void clearStationNumber();
+
+boolean setStationPower(int newStationPower);
+
+int getStationPower();
+
+void clearStationPower();
+
 /**
  * Writes if the board has finished setup to the flash
  * @param setupComplete A boolean saying if the board has been setup to write to flash

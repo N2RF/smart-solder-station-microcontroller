@@ -12,10 +12,15 @@ extern const int FIRMWARE_VERSION_MAJOR;
 extern const int FIRMWARE_VERSION_MINOR;
 extern const int FIRMWARE_VERSION_PATCH;
 
+extern const String macAddress;
+
 extern String stationName;
 
 extern boolean personDetected;
 
 extern int stationNumber;
+extern int watts;
+
+extern const String serverAddress;
 
 #endif //GLOBALS_H
