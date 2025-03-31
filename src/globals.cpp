@@ -15,6 +15,6 @@ String stationName = "Smart-Soldering-Station";
 boolean personDetected = false;
 
 int stationNumber = 0;
-int watts = 83;
+int watts = 83; //calculated from the soldering irons
 
 const String serverAddress = "https://smart-solder-station.fly.dev";

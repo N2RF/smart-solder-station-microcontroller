@@ -88,7 +88,55 @@ boolean onboardIron(){
 }
 
 boolean transmitMessage(boolean stationState){
+    JsonDocument device_data;
+    JsonDocument received_data;
+
     Serial.println("Transmitting message");
+
+    //TODO change the endpoint
+    const String endpoint = "";
+    String route = serverAddress + endpoint;
+
+    Serial.println("Starting HTTPS request");
+    if(!httpClient.begin(wifiClient, route)){
+        Serial.println("Failed to start HTTPS connection");
+        return false;
+    }
+
+    //TODO change these once we know what to send
+    //device_data["mac_address"] = macAddress;
+    //device_data["bench_id"] = stationNumber;
+    //device_data["wats_per_hour"] = watts;
+    String device_data_string;
+    serializeJson(device_data, device_data_string);
+    Serial.println("Sending POST request...");
+
+    httpClient.addHeader("Content-Type", "application/json");
+    int httpCode = httpClient.POST(device_data_string);
+
+    //TODO finish checking this
+    if(httpCode > 0){
+        String responseBody = httpClient.getString();
+        Serial.println("Response body: " + responseBody);
+        httpClient.end();
+        if(httpCode == 200){
+            Serial.println("Onboarded successfully");
+            return true;
+        } else if (httpCode == 401){
+            Serial.println("Unauthorized");
+            return false;
+        } else if(httpCode == 400){
+            Serial.println("Bad request");
+            return false;
+        } else if(httpCode == 500){
+            Serial.println("Internal server error");
+            return false;
+        } else {
+            Serial.println("Failed to update machine status: Unknown error");
+            return false;
+        }
+    }
+    Serial.println("Microcontroller error on transmitting");
     return false;
 }
 

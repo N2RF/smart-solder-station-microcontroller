@@ -81,6 +81,7 @@ void transmitTick() {
             break;
         case TRANSMIT:
             bool didTransmit = transmitMessage(personDetected);
+            //TODO handle transmission errors
             break;
     }
 }

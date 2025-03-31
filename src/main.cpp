@@ -24,7 +24,7 @@ void detectionTask(void * pvParameters) {
 void transmitTask(void * pvParameters){
     while(true){
         transmitTick();
-        vTaskDelay(150 / portTICK_PERIOD_MS);
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
 
